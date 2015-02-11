@@ -4,61 +4,45 @@ from mibuild.xilinx_ise import XilinxISEPlatform
 from mibuild.programmer import XC3SProg
 
 _io = [
-	("user_led", 0, Pins("P112"), IOStandard("LVCMOS33"), Drive(24), Misc("SLEW=QUIETIO")),
-
-	("clk32", 0, Pins("P94"), IOStandard("LVCMOS33")),
-
-	("serial", 0,
-		Subsignal("tx", Pins("P105"), IOStandard("LVCMOS33"), Misc("SLEW=SLOW")),
-		Subsignal("rx", Pins("P101"), IOStandard("LVCMOS33"), Misc("PULLUP"))
-	),
+        ("user_led", 0, Pins("P11"), IOStandard("LVCMOS33")),
+        ("user_led", 1, Pins("N9"), IOStandard("LVCMOS33")),
+        ("user_led", 2, Pins("M9"), IOStandard("LVCMOS33")),
+        ("user_led", 3, Pins("P9"), IOStandard("LVCMOS33")),
+        ("user_led", 4, Pins("T8"), IOStandard("LVCMOS33")),
+        ("user_led", 5, Pins("N8"), IOStandard("LVCMOS33")),
+        ("user_led", 6, Pins("P8"), IOStandard("LVCMOS33")),
+        ("user_led", 7, Pins("P7"), IOStandard("LVCMOS33")),
+        
+	("clk32", 0, Pins("K3"), IOStandard("LVCMOS33")),
+        ("clk50", 0, Pins("J4"), IOStandard("LVCMOS33")),
 
 	("spiflash", 0,
-		Subsignal("cs_n", Pins("P38")),
-		Subsignal("clk", Pins("P70")),
-		Subsignal("mosi", Pins("P64")),
-		Subsignal("miso", Pins("P65"), Misc("PULLUP")),
-		IOStandard("LVCMOS33"), Misc("SLEW=FAST")
-	),
-	("spiflash2x", 0,
-		Subsignal("cs_n", Pins("P38")),
-		Subsignal("clk", Pins("P70")),
-		Subsignal("dq", Pins("P64", "P65")),
-		IOStandard("LVCMOS33"), Misc("SLEW=FAST")
-	),
-
-	("sdram_clock", 0, Pins("P32"), IOStandard("LVCMOS33"), Misc("SLEW=FAST")),
-	("sdram", 0,
-		Subsignal("a", Pins("P140 P139 P138 P137 P46 P45 P44",
-		  "P43 P41 P40 P141 P35 P34")),
-		Subsignal("ba", Pins("P143 P142")),
-		Subsignal("cs_n", Pins("P1")),
-		Subsignal("cke", Pins("P33")),
-		Subsignal("ras_n", Pins("P2")),
-		Subsignal("cas_n", Pins("P5")),
-		Subsignal("we_n", Pins("P6")),
-		Subsignal("dq", Pins("P9 P10 P11 P12 P14 P15 P16 P8 P21 P22 P23 P24 P26 P27 P29 P30")),
-		Subsignal("dm", Pins("P7 P17")),
-		IOStandard("LVCMOS33"), Misc("SLEW=FAST")
+		Subsignal("cs_n", Pins("T3")),
+		Subsignal("clk", Pins("R11")),
+		Subsignal("mosi", Pins("T10")),
+		Subsignal("miso", Pins("P10"))
 	)
 ]
 
 _connectors = [
-	("A", "P48 P51 P56 P58 P61 P66 P67 P75 P79 P81 P83 P85 P88 P93 P98 P100"),
-	("B", "P99 P97 P92 P87 P84 P82 P80 P78 P74 P95 P62 P59 P57 P55 P50 P47"),
-	("C", "P114 P115 P116 P117 P118 P119 P120 P121 P123 P124 P126 P127 P131 P132 P133 P134")
+        ("A", "E7 C8 D8 E8 D9 A10 B10 C10 E10 F9 F10 D11"),
+        ("B", "E11 D14 D12 E12 E13 F13 F12 F14 G12 H14 J14"),
+        ("C", "J13 J12 K14 L14 L13 M14 M13 N14 M12 N12 P12 M11"),
+        ("D", "D6 C6 E6 C5"),
+        ("E", "D5 A4 G5 A3 B3 A2 B2 C3 C2 D3 D1 E3"),
+        ("F", "E2 E1 E4 F4 F5 G3 F3 G1 H3 H1 H2 J1")
 ]
 
 class Platform(XilinxISEPlatform):
 	def __init__(self):
-		XilinxISEPlatform.__init__(self, "xc6slx9-tqg144-2", _io,
-			lambda p: SimpleCRG(p, "clk32", None), _connectors)
+		XilinxISEPlatform.__init__(self, "xc6slx9-3-ftg256", _io,
+			lambda p: SimpleCRG(p, "clk50", None), _connectors)
 
 	def create_programmer(self):
-		return XC3SProg("papilio", "bscan_spi_lx9_papilio.bit")
+		return XC3SProg("minispartan6", "bscan_spi_minispartan6.bit")
 
 	def do_finalize(self, fragment):
 		try:
-			self.add_period_constraint(self.lookup_request("clk32"), 31.25)
+			self.add_period_constraint(self.lookup_request("50"), 50)
 		except ConstraintError:
 			pass
