@@ -4,23 +4,96 @@ from mibuild.xilinx_ise import XilinxISEPlatform
 from mibuild.programmer import XC3SProg
 
 _io = [
-        ("user_led", 0, Pins("P11"), IOStandard("LVCMOS33")),
-        ("user_led", 1, Pins("N9"), IOStandard("LVCMOS33")),
-        ("user_led", 2, Pins("M9"), IOStandard("LVCMOS33")),
-        ("user_led", 3, Pins("P9"), IOStandard("LVCMOS33")),
-        ("user_led", 4, Pins("T8"), IOStandard("LVCMOS33")),
-        ("user_led", 5, Pins("N8"), IOStandard("LVCMOS33")),
-        ("user_led", 6, Pins("P8"), IOStandard("LVCMOS33")),
-        ("user_led", 7, Pins("P7"), IOStandard("LVCMOS33")),
+        ("user_led", 0, Pins("P11"), IOStandard("LVTTL"), Misc("SLEW=SLOW")),
+        ("user_led", 1, Pins("N9"),  IOStandard("LVTTL"), Misc("SLEW=SLOW")),
+        ("user_led", 2, Pins("M9"),  IOStandard("LVTTL"), Misc("SLEW=SLOW")),
+        ("user_led", 3, Pins("P9"),  IOStandard("LVTTL"), Misc("SLEW=SLOW")),
+        ("user_led", 4, Pins("T8"),  IOStandard("LVTTL"), Misc("SLEW=SLOW")),
+        ("user_led", 5, Pins("N8"),  IOStandard("LVTTL"), Misc("SLEW=SLOW")),
+        ("user_led", 6, Pins("P8"),  IOStandard("LVTTL"), Misc("SLEW=SLOW")),
+        ("user_led", 7, Pins("P7"),  IOStandard("LVTTL"), Misc("SLEW=SLOW")),
         
+	("user_sw", 0, Pins("L1"), IOStandard("LVTTL"), Misc("PULLUP")),
+	("user_sw", 1, Pins("L3"), IOStandard("LVTTL"), Misc("PULLUP")),
+	("user_sw", 2, Pins("L4"), IOStandard("LVTTL"), Misc("PULLUP")),
+	("user_sw", 3, Pins("L5"), IOStandard("LVTTL"), Misc("PULLUP")),
+
 	("clk32", 0, Pins("K3"), IOStandard("LVCMOS33")),
         ("clk50", 0, Pins("J4"), IOStandard("LVCMOS33")),
 
 	("spiflash", 0,
-		Subsignal("cs_n", Pins("T3")),
-		Subsignal("clk", Pins("R11")),
-		Subsignal("mosi", Pins("T10")),
-		Subsignal("miso", Pins("P10"))
+		Subsignal("cs_n", Pins("T3"), IOStandard("LVTTL")),
+		Subsignal("clk",  Pins("R11"), IOStandard("LVTTL")),
+		Subsignal("mosi", Pins("T10"), IOStandard("LVTTL")),
+		Subsignal("miso", Pins("P10"), IOStandard("LVTTL"))
+	),
+
+	("adc", 0,
+		Subsignal("cs_n", Pins("F6"), IOStandard("LVTTL")),
+		Subsignal("clk",  Pins("G6"), IOStandard("LVTTL")),
+		Subsignal("mosi", Pins("H4"), IOStandard("LVTTL")),
+		Subsignal("miso", Pins("H5"), IOStandard("LVTTL"))
+	),		
+
+	("serial", 0,
+		Subsignal("tx", Pins("N1"), IOStandard("LVTTL")),
+		Subsignal("rx", Pins("N3"), IOStandard("LVTTL")),
+		Subsignal("siwua", Pins("M3"), IOStandard("LVTTL")),
+		Subsignal("wr", Pins("M2"), IOStandard("LVTTL")),
+		Subsignal("rd", Pins("M1"), IOStandard("LVTTL")),
+		Subsignal("d", Pins("M7 N6 M6 P5 N5 P4 P2 P1"), IOStandard("LVTTL"))
+
+	),
+
+	("audio", 0,
+		Subsignal("a0", Pins("B8"), IOStandard("LVTTL")),
+		Subsignal("a1", Pins("A8"), IOStandard("LVTTL"))
+	),
+
+	("sdram_clock", 0, Pins("G16"), IOStandard("LVTTL")),
+	("sdram", 0,
+		Subsignal("a", Pins("T15 R16 P15 P16 N16 M15 M16 L16 K15 K16 R15 J16 H15")),
+		Subsignal("dq", Pins("T13 T12 R12 T9 R9 T7 R7 T6 F16 E15 E16 D16 B16 B15 C16 C15")),
+		Subsignal("we_n", Pins("R5")),
+		Subsignal("ras_n", Pins("R2")),
+		Subsignal("cas_n", Pins("T4")),
+		Subsignal("cs_n", Pins("R1")),
+		Subsignal("cke", Pins("H16")),
+		Subsignal("ba", Pins("R14 T14")),
+		Subsignal("dm", Pins("T5 F15"))
+	),
+
+	("sd", 0,
+		Subsignal("sck", Pins("L12")),
+		Subsignal("d3", Pins("K12")),
+		Subsignal("d", Pins("M10")),
+		Subsignal("d1", Pins("L10")),
+		Subsignal("d2", Pins("J11")),
+		Subsignal("cmd", Pins("K11"))
+	),
+
+	("dvi_in", 0,
+		Subsignal("clk_p", Pins("C9"), IOStandard("TMDS_33")),
+		Subsignal("clk_n", Pins("A9"), IOStandard("TMDS_33")),
+		Subsignal("data0_p", Pins("C7"), IOStandard("TMDS_33")),
+		Subsignal("data0_n", Pins("A7"), IOStandard("TMDS_33")),
+		Subsignal("data1_p", Pins("B6"), IOStandard("TMDS_33")),
+		Subsignal("data1_n", Pins("A6"), IOStandard("TMDS_33")),
+		Subsignal("data2_p", Pins("B5"), IOStandard("TMDS_33")),
+		Subsignal("data2_n", Pins("A5"), IOStandard("TMDS_33")),
+		Subsignal("scl", Pins("C1"), IOStandard("LVTTL")),
+		Subsignal("sda", Pins("B1"), IOStandard("LVTTL")),
+	),
+
+	("dvi_out", 0,
+		Subsignal("clk_p", Pins("B14"), IOStandard("TMDS_33")),
+		Subsignal("clk_n", Pins("A14"), IOStandard("TMDS_33")),
+		Subsignal("data0_p", Pins("C13"), IOStandard("TMDS_33")),
+		Subsignal("data0_n", Pins("A13"), IOStandard("TMDS_33")),
+		Subsignal("data1_p", Pins("B12"), IOStandard("TMDS_33")),
+		Subsignal("data1_n", Pins("A12"), IOStandard("TMDS_33")),
+		Subsignal("data2_p", Pins("C11"), IOStandard("TMDS_33")),
+		Subsignal("data2_n", Pins("A11"), IOStandard("TMDS_33")),
 	)
 ]
 
