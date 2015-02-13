@@ -82,7 +82,7 @@ _io = [
 		Subsignal("data2_p", Pins("B5"), IOStandard("TMDS_33")),
 		Subsignal("data2_n", Pins("A5"), IOStandard("TMDS_33")),
 		Subsignal("scl", Pins("C1"), IOStandard("LVTTL")),
-		Subsignal("sda", Pins("B1"), IOStandard("LVTTL")),
+		Subsignal("sda", Pins("B1"), IOStandard("LVTTL"))
 	),
 
 	("dvi_out", 0,
@@ -93,7 +93,7 @@ _io = [
 		Subsignal("data1_p", Pins("B12"), IOStandard("TMDS_33")),
 		Subsignal("data1_n", Pins("A12"), IOStandard("TMDS_33")),
 		Subsignal("data2_p", Pins("C11"), IOStandard("TMDS_33")),
-		Subsignal("data2_n", Pins("A11"), IOStandard("TMDS_33")),
+		Subsignal("data2_n", Pins("A11"), IOStandard("TMDS_33"))
 	)
 ]
 
