@@ -36,13 +36,8 @@ _io = [
 	),		
 
 	("serial", 0,
-		Subsignal("tx", Pins("N1"), IOStandard("LVTTL")),
-		Subsignal("rx", Pins("N3"), IOStandard("LVTTL")),
-		Subsignal("siwua", Pins("M3"), IOStandard("LVTTL")),
-		Subsignal("wr", Pins("M2"), IOStandard("LVTTL")),
-		Subsignal("rd", Pins("M1"), IOStandard("LVTTL")),
-		Subsignal("d", Pins("M7 N6 M6 P5 N5 P4 P2 P1"), IOStandard("LVTTL"))
-
+		Subsignal("tx", Pins("N3"), IOStandard("LVTTL")),
+		Subsignal("rx", Pins("N1"), IOStandard("LVTTL"))
 	),
 
 	("audio", 0,
