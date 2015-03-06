@@ -3,7 +3,7 @@
 
 from mibuild.generic_platform import *
 from mibuild.crg import SimpleCRG
-from mibuild.xilinx.ise import XilinxISEPlatform
+from mibuild.xilinx_ise import XilinxISEPlatform
 from mibuild.xilinx.programmer import XC3SProg
 
 _io = [
